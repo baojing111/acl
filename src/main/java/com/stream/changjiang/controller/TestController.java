@@ -15,11 +15,12 @@ public class TestController {
     @RequestMapping("/test")
     public Account getTest(){
         Account account = new Account();
-        account.setId(1L);
+        account.setId(111111L);
         account.setCreateTime(new Date());
         account.setPassword("123456");
-        account.setPhone("15000500050");
-        account.setUsername("baojing");
+        account.setPhone("15000000000");
+        account.setUsername("test001");
+        System.out.print(account);
         accountServiceImpl.saveAccount(account);
         Account account1 = accountServiceImpl.queryAccount(1L);
         return account1;
