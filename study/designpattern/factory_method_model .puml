@@ -1,0 +1,33 @@
+@startuml
+title 工厂方法模式
+
+legend right
+定义一个创建对象的接口，让其子类自己决定实
+例化哪一个工厂类，工厂模式使其创建过程延迟
+到子类进行。
+end legend
+
+abstract class AbstractList
+abstract AbstractCollection
+interface List
+interface Collection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class ArrayList {
+Object[] elementData
+size()
+}
+
+enum TimeUnit {
+DAYS
+HOURS
+MINUTES
+}
+
+@enduml
