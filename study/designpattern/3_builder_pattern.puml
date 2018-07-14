@@ -1,0 +1,64 @@
+@startuml
+title 建造者模式
+legend right
+例子：http://www.runoob.com/design-pattern/builder-pattern.html
+end legend
+
+interface Packing <<包装>>{
+    +pack() : 打包
+}
+class Wrapper<<纸张>>
+class Bottle<<瓶装>>
+
+interface Item{
+    +name() : 名字
+    +packing() : 包装
+    +price() : 价格
+}
+interface Burger<<汉堡>>
+interface Drink<<饮料>>
+
+class VegBurger<<素菜汉堡>>
+class ChickenBurger<<鸡肉汉堡>>
+
+class PeisiDrink<<雪碧>>
+class CokeDrink<<可乐>>
+
+class Meal<<订单>>{
+    -items : 商品集合
+    +name() : 名字
+    +packing() : 包装
+    +price() : 价格
+
+}
+
+class MealBuilder<<建造者>>{
+    +prepareVegMeal() : 生产蔬菜汉堡套餐
+    +prepareNonVegMeal() : 生产非蔬菜汉堡套餐
+}
+
+Packing <|.down. Bottle : implement
+Packing <|.down. Wrapper : implement
+
+Item <|-- Burger : extends
+Item <|-- Drink : extends
+
+Burger <|.. VegBurger : extends
+Burger <|.. ChickenBurger : extends
+
+Drink <|.. PeisiDrink : extends
+Drink <|.. CokeDrink : extends
+
+Wrapper <-down- Burger : 关联
+Bottle <-down- Drink : 关联
+
+Item <-left- Meal : 关联
+
+Meal <-left- MealBuilder : 关联
+
+
+
+
+
+
+@enduml
