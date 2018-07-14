@@ -2,32 +2,31 @@
 title 工厂方法模式
 
 legend right
-定义一个创建对象的接口，让其子类自己决定实
-例化哪一个工厂类，工厂模式使其创建过程延迟
-到子类进行。
+作用：将类的实例化（具体产品的创建）延迟到工厂类的子类（具体工厂）
+中完成，即由子类来决定应该实例化（创建）哪一个类。
 end legend
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+interface Product{
+    +show() : void
 }
+class ProductA
+class ProductB
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+Product <|.. ProductA : implement
+Product <|.. ProductB : implement
+
+interface Factory{
+    +createProduct() : Product
 }
+class FactoryA
+class FactoryB
+
+Factory <|-- FactoryA : implement
+Factory <|-- FactoryB : implement
+
+ProductA <-- FactoryA : 关联
+ProductB <-- FactoryB : 关联
+
+
 
 @enduml
