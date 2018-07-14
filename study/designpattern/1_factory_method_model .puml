@@ -1,0 +1,34 @@
+@startuml
+title 工厂方法模式
+legend right
+案例：https://blog.csdn.net/zhutulang/article/details/43495825
+end legend
+
+interface IceCream{
+    +taste() : void
+}
+
+class AppleIceCream
+class BananaIceCream
+class StrawberryIceCream
+
+IceCream <|.down. AppleIceCream
+IceCream <|.down. BananaIceCream
+IceCream <|.down. StrawberryIceCream
+
+interface IceCreamFactory{
+    +createIceCream() : IceCream
+}
+class AppleIceCreamFactory
+class BananaIceCreamFactory
+class StrawberryIceCreamFactory
+IceCreamFactory <|.down. AppleIceCreamFactory
+IceCreamFactory <|.down. BananaIceCreamFactory
+IceCreamFactory <|.down. StrawberryIceCreamFactory
+
+IceCream <-left- IceCreamFactory
+AppleIceCream <-left- AppleIceCreamFactory
+BananaIceCream <-left- BananaIceCreamFactory
+StrawberryIceCream <-left- StrawberryIceCreamFactory
+
+@enduml
