@@ -1,0 +1,31 @@
+@startuml
+
+title 组合模式
+legend right
+案例：https://blog.csdn.net/disiwei1012/article/details/53513538
+end legend
+
+abstract Component<<树枝和树叶的共性抽象>>{
+    +name : String
+    +add(Component) : void
+    +removed(Component) : void
+    +display(int depth) : void
+}
+
+class Composite <<树枝>>{
+    +name : String
+    +components : List<Component>
+    +add(Component) : void
+    +removed(Component) : void
+    +display(int depth) : void
+}
+class Leaf<<树枝>>{
+    +name : String
+    +display(int depth) : void
+}
+Component <|-- Composite
+Component <|-- Leaf
+
+
+
+@enduml
