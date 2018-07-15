@@ -6,3 +6,23 @@ plantUml 类图语法 ：https://blog.csdn.net/changsimeng/article/details/54410
 
 
 设计模式学习：http://www.runoob.com/design-pattern/builder-pattern.html
+
+设计模式：
+
+ 创建型：
+        单例模式、
+        简单工厂模式（0_simple_factory_pattern）
+        工厂方法模式（1_factory_method_pattern）
+        抽象工厂模式（2_abstract_factory_pattern）
+        建造者模式（3_builder_pattern）
+        原型模式
+
+
+ 结构型：
+        适配器模式
+        桥接模式(5_bridge_pattern)
+        组合模式
+        享元模式
+        装饰模式
+        代理模式
+        外观模式(4_facade_pattern)

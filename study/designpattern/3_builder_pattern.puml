@@ -56,8 +56,11 @@ Item <-left- Meal : 关联
 
 Meal <-left- MealBuilder : 关联
 
+class Enter{
+    +main() : void
+}
 
-
+MealBuilder <-- Enter : 关联
 
 
 

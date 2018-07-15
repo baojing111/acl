@@ -1,0 +1,26 @@
+@startuml
+
+title 桥接模式
+legend right
+例子：https://blog.csdn.net/u013256816/article/details/51000327
+end legend
+abstract Restaurant<<餐厅>>
+package RestaurantImpl<<餐厅>>{
+    Restaurant <|.. XiaoNanGuo
+    Restaurant <|.. WaiPojia
+}
+
+abstract CityArea<<城市>>{
+    +restaurant : 餐厅
+}
+package CityAreaImpl<<城市>>{
+   CityArea <|.. NanjingRestaurant
+   CityArea <|.. ShanghaiRestaurant
+
+}
+CityArea -left-> Restaurant
+
+
+
+
+@enduml
