@@ -1,0 +1,28 @@
+@startuml
+
+title 模版方法
+legend right
+案例：http://www.runoob.com/design-pattern/template-pattern.html
+end legend
+abstract AbstractTemplate<<模版类>>{
+    +TemplateMethod() : 模版方法
+    +operationA(): 步骤1
+    +operationB(): 步骤2
+
+}
+package ConcreteClasses{
+    class ConcreteClassA{
+         +operationA(): 步骤1
+         +operationB(): 步骤2
+    }
+    class ConcreteClassB{
+          +operationA(): 步骤1
+          +operationB(): 步骤2
+    }
+    ConcreteClassA .up.|> AbstractTemplate
+    ConcreteClassB .up.|> AbstractTemplate
+
+
+}
+
+@enduml

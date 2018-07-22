@@ -1,0 +1,24 @@
+@startuml
+title 观察者模式
+legend right
+案例：http://www.runoob.com/design-pattern/observer-pattern.html
+end legend
+
+abstract Subject<<主题类>>{
+    -observers : List 观察者聚集引用
+    +attach(Observer observer) : 新增观察者
+    +detach(Observer observer) : 移除观察者
+    +notity() : 通知
+}
+interface Observer<<观察者>>{
+    +update() : 更新动作
+}
+Subject -right-> Observer
+
+class ConcteteSubject{
+    -subjectState : 主题的状态
+}
+ConcteteSubject -up-|> Subject
+ConcteteObserver -up-|> Observer
+ConcteteObserver <-right- ConcteteSubject
+@enduml
