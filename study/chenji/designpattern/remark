@@ -22,12 +22,12 @@ plantUml 类图语法 ：https://blog.csdn.net/changsimeng/article/details/54410
 
  结构型：
         适配器模式：将一个接口转换成客户客户希望的接口，使得原本不能一起工作的类可以一起工作
-        桥接模式(5_bridge_pattern)
-        组合模式(7_composite_entity_pattern)
+        桥接模式(5_bridge_pattern):将抽象部分与它的实现部分分离使它们都可以独立的变化（由于实现的方式有多种，桥接模式的意图是把这些现实独立出来，让它们独自变化）
+        组合模式(7_composite_entity_pattern)：将对像组合成树形结构，表示部分-整体的层次结构，组合模式使得用户对单个对象的和组合对象的使用具有一致性
         享元模式（8_flyweight_pattern）：运用共享技术有效地支持大量细粒度的对象。
-        装饰模式(6_decorator_pattern)
+        装饰模式(6_decorator_pattern)：动态地给一个对象添加额外的职能，就增加功能来说，比生成子类更为灵活
         代理模式：为其他对象提供一种代理以控制这个对象的访问
-        外观模式(4_facade_pattern)
+        外观模式(4_facade_pattern)：为子系统中的一组接口提供一个高层的接口，使得子系统更加容易使用
 
  行为型：
         策略模式(9_strategy_pattern)：定义类算法家族，分别分装起来，让它们之间可以相互替换，使得算法的变化，不影响到使用算法的客户
