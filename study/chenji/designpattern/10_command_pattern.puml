@@ -1,0 +1,42 @@
+@startuml
+
+title 命令模式
+
+legend right
+案例：http://www.runoob.com/design-pattern/command-pattern.html
+end legend
+
+interface Command<<请求接口>>{
+    +excute():void
+}
+package Commands<<请求实现类>>{
+    class CommandA{
+        -receiver : Receiver
+    }
+    class CommandB{
+            -receiver : Receiver
+    }
+    CommandA .up.|> Command : implements
+    CommandB .up.|> Command : implements
+
+}
+class Receiver<<请求处理者>>{
+    +excute() : void
+}
+
+CommandA --> Receiver : implements
+CommandB --> Receiver : implements
+
+class Invoker<<请求的管理者>>{
+    -commands : List<Command>
+    +addCommand() : void
+    +removeCommand() : void
+
+}
+Invoker -left-> Command
+class Client<<客户端>>{
+    +main() : void
+}
+Client -left-> Invoker
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+
+title 状态模式
+legend right
+案例：http://www.runoob.com/design-pattern/state-pattern.html
+end legend
+
+class Context<<实体对象>>{
+    -state : 状态
+}
+interface State<<状态接口>>{
+    +doAction(Context context) : 当前状态与context相关的行为
+}
+Context -left-> State
+package States<<具体状态>>{
+    StateA .up.|> State : implements
+    StateB .up.|> State : implements
+}
+
+@enduml

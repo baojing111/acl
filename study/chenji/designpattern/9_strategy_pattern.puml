@@ -1,0 +1,31 @@
+@startuml
+
+title 策略模式
+
+legend right
+案例：http://www.runoob.com/design-pattern/strategy-pattern.html
+end legend
+
+interface Stragegy<<算法接口>>{
+    +doOperation() : void
+}
+
+package stragegys<<策略实现类>>{
+    OperationAdd .up.|> Stragegy : implement
+    OperationSubstract .up.|> Stragegy : implement
+    OperationMultiply .up.|> Stragegy : implement
+
+}
+class Context<<管理类>>{
+    -stragegy : Stragegy
+    +invokeOperation() : void
+}
+
+Context -left-> Stragegy
+
+class Client<<客户端>>{
+    +main(String[] arg) : void
+}
+
+Context <-left- Client
+@enduml
