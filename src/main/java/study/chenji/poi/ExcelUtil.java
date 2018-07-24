@@ -7,26 +7,26 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public  class ExcelUtil {
+public  class ExcelUtil{
 
-    private static final String SUFFIX_2003 = ".xls";
-    private static final String SUFFIX_2007 = ".xlsx";
+    private final String SUFFIX_2003 = ".xls";
+    private final String SUFFIX_2007 = ".xlsx";
     //列数
     private Integer totalCells = 0;
+
+    private List<Map<String,String>> listError = new ArrayList<>();
+
     /*
      * 1、文件类型的校验，并获取工workbook
      */
     public Workbook createWorkbook(MultipartFile file) throws Exception {
         if (file == null) {
-            throw new RuntimeException("文件对象不能为空");
+            return null;
         }
         //获取文件的名字
         String originalFilename = file.getOriginalFilename();
@@ -39,7 +39,6 @@ public  class ExcelUtil {
             }
         } catch (Exception e) {
             throw new RuntimeException("格式错误");
-
         }
         return workbook;
     }
@@ -70,7 +69,7 @@ public  class ExcelUtil {
         }
         Map<Integer,List<String>> dataMap = new HashMap<>();
         //行数
-        int totalRows = sheet.getPhysicalNumberOfRows();
+        int totalRows = sheet.getLastRowNum();
         //列数
         if (totalRows >= 1 && sheet.getRow(0) != null) {
             this.totalCells = sheet.getRow(0).getPhysicalNumberOfCells();
@@ -136,21 +135,22 @@ public  class ExcelUtil {
     /**
      * 3、组装成Excel对象
      */
-    public Object buildExcelDTO(Map<Integer,List<String>> map,Class aclass) throws IllegalAccessException, InstantiationException {
+    public <T> List<T> buildExcelDTO(Map<Integer,List<String>> map,Class<T> aclass) throws Exception{
         if (map == null || aclass == null){
             return null;
         }
-        Field[] fields = aclass.getFields();
+        Field[] fields = aclass.getDeclaredFields();
         Map<String,Field> mapFiel = new HashMap<>();
-        if (fields != null){
-            for (Field field : fields){
-                ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
-                String value = annotation.value();
-                mapFiel.put(value,field);
-            }
+        if(mapFiel == null){
+            throw new RuntimeException("class 对象的属性为null");
         }
-        List list = new ArrayList<>();
+        for (Field field : fields){
+            ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
+            String value = annotation.value();
+            mapFiel.put(value,field);
+        }
 
+        List list = new ArrayList<>();
         Set<Integer> integers = map.keySet();
         for (Integer code :integers) {
             List<String> strings = map.get(code);
@@ -159,6 +159,9 @@ public  class ExcelUtil {
             }
             String headValue = strings.get(0);
             Field flied = mapFiel.get(headValue);
+            if (flied == null) {
+                throw new RuntimeException("实体对象中没有" + headValue);
+            }
             for (int lie = 1; lie < strings.size(); lie++) {
                 flied.setAccessible(true);
                 Object obj = null;
@@ -168,9 +171,6 @@ public  class ExcelUtil {
                 }catch (IndexOutOfBoundsException e){
                     obj = aclass.newInstance();
                 }
-                if (obj == null){
-                    continue;
-                }
                 flied.set(obj,strings.get(lie));
             }
         }
@@ -178,6 +178,18 @@ public  class ExcelUtil {
         return list;
     }
 
-
-
+    public <G> Map<String,List<G>> tempalteMethod(MultipartFile file,Class<G> aclass) throws Exception {
+        Workbook workbook = createWorkbook(file);
+        List<Sheet> sheets = getSheets(workbook);
+        if (!CollectionUtils.isEmpty(sheets)){
+            Map<String,List<G>> result = new HashMap<>();
+            for (Sheet sheet : sheets){
+                Map<Integer, List<String>> map = readByColumn(sheet);
+                List<G> gs = buildExcelDTO(map, aclass);
+                result.put(sheet.getSheetName(),gs);
+            }
+            return result;
+        }
+        return null;
+    }
 }

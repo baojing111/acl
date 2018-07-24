@@ -8,7 +8,7 @@ package study.chenji.poi;
 public class TestAccount {
 
     @ExcelColumn("主键")
-    private Long id;
+    private String id;
 
     @ExcelColumn("用户名")
     private String name;
@@ -16,11 +16,11 @@ public class TestAccount {
     @ExcelColumn("密码")
     private String password;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
