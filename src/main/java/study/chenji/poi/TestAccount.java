@@ -3,7 +3,7 @@ package study.chenji.poi;
 
 
 /**
- * 测试类
+ * Excel 测试类
  */
 public class TestAccount {
 

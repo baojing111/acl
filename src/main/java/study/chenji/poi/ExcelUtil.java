@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * excel 导入工具
+ */
 public  class ExcelUtil{
 
     private final String SUFFIX_2003 = ".xls";
@@ -20,6 +23,32 @@ public  class ExcelUtil{
     private Integer totalCells = 0;
 
     private List<Map<String,String>> listError = new ArrayList<>();
+
+    /**
+     * excel导入 模版方法
+     * @param file
+     * @param aclass 要转化的对象
+     * @param <G>
+     * @return
+     * @throws Exception
+     */
+    public <G> Map<String,List<G>> tempalteMethod(MultipartFile file,Class<G> aclass) throws Exception {
+        //创建Workbook
+        Workbook workbook = createWorkbook(file);
+        //获取工作表
+        List<Sheet> sheets = getSheets(workbook);
+        //将工作表转为对应的对象
+        if (!CollectionUtils.isEmpty(sheets)){
+            Map<String,List<G>> result = new HashMap<>();
+            for (Sheet sheet : sheets){
+                Map<Integer, List<String>> map = readByColumn(sheet);
+                List<G> gs = buildExcelDTO(map, aclass);
+                result.put(sheet.getSheetName(),gs);
+            }
+            return result;
+        }
+        return null;
+    }
 
     /*
      * 1、文件类型的校验，并获取工workbook
@@ -178,18 +207,5 @@ public  class ExcelUtil{
         return list;
     }
 
-    public <G> Map<String,List<G>> tempalteMethod(MultipartFile file,Class<G> aclass) throws Exception {
-        Workbook workbook = createWorkbook(file);
-        List<Sheet> sheets = getSheets(workbook);
-        if (!CollectionUtils.isEmpty(sheets)){
-            Map<String,List<G>> result = new HashMap<>();
-            for (Sheet sheet : sheets){
-                Map<Integer, List<String>> map = readByColumn(sheet);
-                List<G> gs = buildExcelDTO(map, aclass);
-                result.put(sheet.getSheetName(),gs);
-            }
-            return result;
-        }
-        return null;
-    }
+
 }
