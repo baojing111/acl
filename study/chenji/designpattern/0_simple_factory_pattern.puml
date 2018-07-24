@@ -1,0 +1,26 @@
+@startuml
+title 简单工厂模式
+legend right
+案例：https://blog.csdn.net/zhutulang/article/details/43495825
+end legend
+
+interface IceCream{
+    +taste() : void
+}
+
+class AppleIceCream
+class BananaIceCream
+class StrawberryIceCream
+
+IceCream <|.. AppleIceCream
+IceCream <|.. BananaIceCream
+IceCream <|.. StrawberryIceCream
+
+class IceCreamFactory{
+    +createIceCream() : IceCream
+}
+
+IceCream <- IceCreamFactory
+
+
+@enduml

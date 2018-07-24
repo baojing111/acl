@@ -1,0 +1,33 @@
+@startuml
+
+title 装饰模式
+legend right
+例子：http://www.runoob.com/design-pattern/decorator-pattern.html
+end legend
+
+interface Sharp<<装饰对象>>{
+    +draw() : 画出动作
+}
+
+package SharpImp<<具体形状>>{
+    Sharp <|.. Circle
+    Sharp <|.. Rectangle
+}
+abstract SharpDecorator{
+    #sharp : Sharp
+}
+class RedSharpDecorator{
+    +setSharpDecorator : SharpDecorator
+}
+class YelloSharpDecorator{
+    +setSharpDecorator : SharpDecorator
+}
+Sharp <|.right. SharpDecorator
+SharpDecorator <|-- RedSharpDecorator
+SharpDecorator <|-- YelloSharpDecorator
+
+
+
+
+
+@enduml

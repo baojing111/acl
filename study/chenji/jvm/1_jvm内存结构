@@ -1,0 +1,61 @@
+参考资料：
+    http://www.cnblogs.com/ityouknow/p/5610232.html?spm=a2c4e.11153940.blogcont91260.11.6b936035U1eQEu
+    https://yq.aliyun.com/articles/65458?spm=5176.10695662.1996646101.searchclickresult.a2cd6adcnjT1Aa
+
+一：jvm 主要内存结构：方法区、堆、java虚拟机栈、本地方法栈、程序计数器
+    其中：堆：年轻代、老年代
+        年轻代：Eden fromSurvivor toSuvivor
+
+内存模块详细介绍：
+
+    1、方法区：主要用来存储类的信息、常量、静态变量，即使编译器编译后的代码等数据。
+
+    注意：方法区各个线程共享、常量池在方法区中
+    GC：主要是针对常量池的回收和对类型的卸载。
+    异常：OutofMermoryError
+
+    2、堆：作用就是存放对象的实例，几乎所以的对象实例都是在这里分配的
+    注意：堆各个线程共享
+    GC：GC管理的主要区域（收集器基本采用分代收集算法）
+    异常：OutofMermoryError
+
+    3、java虚拟机栈：描述的是java方法执行的内存模型，每个方法执行的时候都会创建一个栈针
+    用于存储（局部变量表、操作数栈、动态链接、方法的出入口等信息）
+
+    注意：线程私有，生命周期和线程一样
+    异常：StackOverflowError：线程请求的栈深度大于虚拟机允许的深度。
+        OutofMermoryError：无法申请到足够的内存时
+
+    4、本地方法栈：与java虚拟机栈相似，只不过java虚拟机栈为虚拟机执行java方法服务
+    ，而本地方法栈为虚拟机使用到native方法服务的
+    注意：线程私有，生命周期和线程一样
+        异常：StackOverflowError：线程请求的栈深度大于虚拟机允许的深度。
+            OutofMermoryError：无法申请到足够的内存时
+
+    5、程序计数器：当前线程所执行的字节码行指示器
+
+    6、直接内存：并不是虚拟机运行时的数据区的一部分，也不是Java虚拟机规范中定义的内存区域，
+    但是也可能导致OutofMemoryError
+
+
+二：参数控制各区域的内存大小
+    方法区的最大值：-XX:PermMaxSize
+    方法区的最小值：-XX:PermSize
+    堆空间的最小值：—Xms
+    堆空间的最大值：-Xmx
+    新生代的最大值：-Xmn
+    新生代中Eden大小/survivor大小的值：-XX:SurvivorRatio=8
+    老年代大小/新生代大小的值：-XX:NewRatio=2
+    线程的Stack大小：-Xss
+
+    本机直接内存：-XX：MaxDirectMemorySize
+
+
+三：内存溢出和内存泄漏的区别
+
+    内存溢出：程序要求的内存，超出了系统所能分配的范围。
+
+    内存泄漏：是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄露危害可以忽略，
+    但内存泄露堆积后果很严重，无论多少内存,迟早会被占光。
+
+

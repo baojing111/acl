@@ -1,0 +1,30 @@
+@startuml
+
+title 责任链模式
+
+legend right
+案例：http://www.runoob.com/design-pattern/chain-of-responsibility-pattern.html
+end legend
+
+abstract Handler<<请求处理抽象类>>{
+    +setHandler(Handler handler) : 设置后继者
+    +operator(request): 处理请求
+}
+package ConcreteHandlers<<请求处理实现类>>{
+    class ConcreteHandlerA
+    class ConcreteHandlerB
+    ConcreteHandlerA .up.|> Handler
+    ConcreteHandlerB .up.|> Handler
+
+}
+class Client<<客户端>>{
+    +main()
+}
+Client -left-> Handler
+
+
+note left: "处理请求，可以访问它的后继者，如果可以处理请\n求就处理否则就将该请求转发给它的后继则"
+
+
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+
+
+title 享元模式
+legend right
+案例：https://blog.csdn.net/disiwei1012/article/details/53557971
+end legend
+
+abstract Flyweight<<享元类的抽象类>>
+class ConcreteFlyweight<<共享对象 真正的享元类>>
+class UnsharedConcreteFlyweight<<非共享对象>>
+class FlyweightFactory<<享元工厂类>>
+Flyweight <|-- ConcreteFlyweight
+Flyweight <|-- UnsharedConcreteFlyweight
+Flyweight <-left- FlyweightFactory
+
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+title 抽象工厂模式
+legend right
+案例：https://blog.csdn.net/zhutulang/article/details/43495825
+end legend
+
+
+interface IceCream <<冰淇凌>>{
+    +taste() : void
+}
+
+interface ImportedIceCream<<进口冰淇淋>>{
+    +taste() : void
+}
+interface DomesticIceCream<<国产冰淇淋>>{
+    +taste() : void
+}
+
+
+class ImportedAppleIceCream
+class ImportedBananaIceCream
+class ImportedStrawberryIceCream
+
+class DomesticAppleIceCream
+class DomesticBananaIceCream
+class DomesticStrawberryIceCream
+
+IceCream <|-down- ImportedIceCream : extends
+IceCream <|-down- DomesticIceCream : extends
+
+ImportedIceCream <|.down. ImportedAppleIceCream : implement
+ImportedIceCream <|.down. ImportedBananaIceCream : implement
+ImportedIceCream <|.down. ImportedStrawberryIceCream : implement
+
+DomesticIceCream <|.down. DomesticAppleIceCream : implement
+DomesticIceCream <|.down. DomesticBananaIceCream : implement
+DomesticIceCream <|.down. DomesticStrawberryIceCream : implement
+
+interface IceCreamFactory{
+    +createDomesticIceCream() : IceCream
+    +createImportedIceCream() : IceCream
+
+}
+class AppleIceCreamFactory
+class BananaIceCreamFactory
+class StrawberryIceCreamFactory
+IceCreamFactory <|.up. AppleIceCreamFactory : implement
+IceCreamFactory <|.up. BananaIceCreamFactory : implement
+IceCreamFactory <|.up. StrawberryIceCreamFactory : implement
+
+IceCream <-up- IceCreamFactory
+
+ImportedAppleIceCream <-up- AppleIceCreamFactory : 关联
+ImportedBananaIceCream <-up- BananaIceCreamFactory : 关联
+ImportedStrawberryIceCream <-up- StrawberryIceCreamFactory : 关联
+
+DomesticAppleIceCream <-up- AppleIceCreamFactory : 关联
+DomesticBananaIceCream <-up- BananaIceCreamFactory : 关联
+DomesticStrawberryIceCream <-up- StrawberryIceCreamFactory : 关联
+
+@enduml

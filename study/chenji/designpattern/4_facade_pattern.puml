@@ -1,0 +1,21 @@
+@startuml
+
+title 外观模式
+
+legend right
+案例：https://blog.csdn.net/jason0539/article/details/22775311
+end legend
+class Client<<客户端类>>
+
+Client -right-> Facade : 关联
+
+package Model{
+Facade --> ModuleA : 关联
+Facade --> ModuleB : 关联
+Facade --> ModuleC : 关联
+}
+
+
+
+
+@enduml
