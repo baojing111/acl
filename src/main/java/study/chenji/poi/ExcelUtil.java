@@ -165,43 +165,50 @@ public  class ExcelUtil{
      * 3、组装成Excel对象
      */
     public <T> List<T> buildExcelDTO(Map<Integer,List<String>> map,Class<T> aclass) throws Exception{
-        if (map == null || aclass == null){
+        if (CollectionUtils.isEmpty(map) || aclass == null){
             return null;
         }
+        //获取转化对象的属性
         Field[] fields = aclass.getDeclaredFields();
         Map<String,Field> mapFiel = new HashMap<>();
         if(mapFiel == null){
             throw new RuntimeException("class 对象的属性为null");
         }
+        //对属性进行缓存map key:注解的value值  value：field对象
         for (Field field : fields){
             ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
             String value = annotation.value();
             mapFiel.put(value,field);
         }
-
+        //定义返回的容器
         List list = new ArrayList<>();
         Set<Integer> integers = map.keySet();
         for (Integer code :integers) {
+            //获取一列数据
             List<String> strings = map.get(code);
             if (CollectionUtils.isEmpty(strings)){
                 continue;
             }
+            //获取head值
             String headValue = strings.get(0);
+            //mapFiel 中获取要赋值的属性
             Field flied = mapFiel.get(headValue);
             if (flied == null) {
                 throw new RuntimeException("实体对象中没有" + headValue);
             }
-            for (int lie = 1; lie < strings.size(); lie++) {
+            for (int hang = 1; hang < strings.size(); hang++) {
+                //属性为private 设置属性为可访问的
                 flied.setAccessible(true);
                 Object obj = null;
                 try {
-                    obj = list.get(lie - 1);
-
+                    obj = list.get(hang - 1);
                 }catch (IndexOutOfBoundsException e){
+                    //通过放射利用无参构造方法创建对象
                     obj = aclass.newInstance();
-                    list.add(lie - 1,obj);
+                    list.add(hang - 1,obj);
                 }
-                flied.set(obj,strings.get(lie));
+                //属性赋值
+                flied.set(obj,strings.get(hang));
             }
         }
 
