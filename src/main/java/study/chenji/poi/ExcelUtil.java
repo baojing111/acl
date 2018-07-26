@@ -195,10 +195,11 @@ public  class ExcelUtil{
                 flied.setAccessible(true);
                 Object obj = null;
                 try {
-                    obj = list.get(lie);
+                    obj = list.get(lie - 1);
 
                 }catch (IndexOutOfBoundsException e){
                     obj = aclass.newInstance();
+                    list.add(lie - 1,obj);
                 }
                 flied.set(obj,strings.get(lie));
             }
