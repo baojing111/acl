@@ -1,5 +1,8 @@
 package study.chenji.spring.aop.jdk;
 
+import sun.misc.ProxyGenerator;
+import java.io.FileOutputStream;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 
 public class JDKAOPTest {
@@ -18,10 +21,24 @@ public class JDKAOPTest {
                 classLoader,
                 interfaces,
                 testInvoker);
-
-        String baozi = testJDKAOPProxy.getName("baozi");
-
-        System.out.println(baozi + "=========");
+        //获取字节码
+        byte[] bytes = ProxyGenerator.generateProxyClass(
+                testJDKAOPProxy.getClass().getSimpleName(), interfaces, Modifier.PUBLIC);
+        //将字节码输出到本地文件
+        FileOutputStream fileOUt = null;
+        try {
+             fileOUt = new FileOutputStream(testJDKAOPProxy.getClass().getSimpleName() + ".class");
+             fileOUt.write(bytes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (fileOUt != null){
+                try {
+                    fileOUt.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
-
 }
