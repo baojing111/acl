@@ -1,0 +1,73 @@
+@startuml
+测试类 -> getBean : 调用getBean实例化iOCOneServiceBean
+getBean -> 缓存: 调用getSingleton从缓存中获取iOCOneServiceBean
+note right
+a、singletonObjects:为空
+b、earlySingletonObjects:为空
+c、singletonFactories:为空
+end note
+缓存 --> getBean:返回null
+getBean -> createBeanInstance实例化: 调用createBeanInstance 实例化可以提前暴露的iOCOneServiceBean;
+createBeanInstance实例化 -> 缓存: addSingletonFactory添加创建iOCOneServiceBean的工厂缓存
+note right
+a、singletonObjects中为空
+b、earlySingletonObjects
+c、singletonFactories存储
+创建IOCOneServiceBean的工厂
+end note
+createBeanInstance实例化 --> getBean : 返回第一阶段不完整的iOCOneServiceBean实例，但是可以提前曝光
+getBean -> populateBean填充属性:调用populateBean为iOCOneServiceBean填充属性
+
+
+populateBean填充属性 -> getBean : 发现依赖调用getBean实例化iOCTwoServiceBean
+getBean -> 缓存: 调用getSingleton从缓存中获取iOCTwoServiceBean
+note right
+a、singletonObjects中为空
+b、earlySingletonObjects
+c、singletonFactories存储
+创建IOCOneServiceBean的工厂
+end note
+缓存 --> getBean:返回null
+getBean -> createBeanInstance实例化: 调用createBeanInstance 实例化可以提前暴露的iOCTwoServiceBean;
+createBeanInstance实例化 -> 缓存: addSingletonFactory添加创建iOCTwoServiceBean的工厂缓存
+note right
+a、singletonObjects中为空
+b、earlySingletonObjects
+c、singletonFactories存储
+创建IOCOneServiceBean的工厂
+和创建IOCTwoServiceBean的工厂
+end note
+createBeanInstance实例化 --> getBean : 返回第一阶段不完整的iOCTwoServiceBean实例，但是可以提前曝光
+getBean -> populateBean填充属性:调用populateBean为iOCTwoServiceBean填充属性
+
+
+populateBean填充属性 -> getBean : 发现依赖调用getBean获取iOCOneServiceBean
+getBean -> 缓存: 调用getSingleton从缓存中获取iOCOneServiceBean
+note right
+a、singletonObjects中为空
+b、earlySingletonObjects
+c、singletonFactories存储
+创建IOCOneServiceBean的工厂
+和创建IOCTwoServiceBean的工厂
+end note
+缓存 --> getBean:返回可以提前暴露的iOCOneServiceBean
+getBean --> populateBean填充属性:返回可以提前暴露的iOCOneServiceBean
+populateBean填充属性 --> getBean:返回依赖属性组装过的iOCTwoServiceBean（依赖的属性iOCOneServiceBean处理完成）
+getBean -> InitializeBean初始化:调用initializeBean完成iOCTwoServiceBean初时化
+InitializeBean初始化 --> getBean:iOCTwoServiceBean实例化完成
+
+getBean --> populateBean填充属性:返回iOCTwoServiceBean实例用于iOCOneServiceBean属性依赖
+
+populateBean填充属性 --> getBean:返回依赖属性组装过的iOCOneServiceBean（依赖的属性iOCTwoServiceBean处理完成）
+
+getBean -> InitializeBean初始化:调用initializeBean完成iOCOneServiceBean初时化
+
+InitializeBean初始化 --> getBean:iOCOneServiceBean实例化完成
+
+getBean --> 测试类 :返回iOCOneServiceBean实例
+
+
+
+
+
+@enduml
