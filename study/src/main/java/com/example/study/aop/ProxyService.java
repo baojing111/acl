@@ -1,4 +1,4 @@
-package study.chenji.spring.aop;
+package com.example.study.aop;
 
 public interface ProxyService {
     /**

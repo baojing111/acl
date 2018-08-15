@@ -1,4 +1,4 @@
-package study.chenji.spring.aop;
+package com.example.study.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;

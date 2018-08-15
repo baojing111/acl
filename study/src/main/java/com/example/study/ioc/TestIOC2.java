@@ -1,4 +1,4 @@
-package study.chenji.spring.ioc;
+package com.example.study.ioc;
 
 
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;

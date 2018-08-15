@@ -1,4 +1,4 @@
-package study.chenji.spring.ioc;
+package com.example.study.ioc;
 
 public class IOCOneServiceImpl implements IOCOneService {
     private IOCTwoService iocTwoService;

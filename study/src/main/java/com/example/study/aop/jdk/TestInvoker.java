@@ -1,4 +1,4 @@
-package study.chenji.spring.aop.jdk;
+package com.example.study.aop.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

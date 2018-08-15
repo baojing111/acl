@@ -1,4 +1,4 @@
-package study.chenji.poi;
+package com.example.study.poi;
 
 
 

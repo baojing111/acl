@@ -1,10 +1,12 @@
-package study.chenji.spring.aop.jdk;
+package com.example.study.aop.jdk;
 // Decompiled by Jad v1.5.8e2. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://kpdus.tripod.com/jad.html
 // Decompiler options: packimports(3) fieldsfirst ansi space 
 
-import java.lang.reflect.*;
-import study.chenji.spring.aop.jdk.TestJDKAOP;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.UndeclaredThrowableException;
 
 public class $Proxy0 extends Proxy implements TestJDKAOP {
 

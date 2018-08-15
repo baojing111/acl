@@ -1,4 +1,4 @@
-package study.chenji.spring.aop.jdk;
+package com.example.study.aop.jdk;
 
 /**
  * 测试接口实现类
