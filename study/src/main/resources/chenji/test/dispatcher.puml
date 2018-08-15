@@ -1,0 +1,44 @@
+@startuml
+title
+请求时序图
+end title
+
+actor 客户端
+
+
+客户端 -> DispatcherServlet
+DispatcherServlet -> LocaleContext:本地解析(国际化处理）
+
+DispatcherServlet -> FlashMapManager:重定向数据管理器数据处理
+
+DispatcherServlet -> MultipartResolver:文件解析器
+MultipartResolver --> DispatcherServlet:返回经过文件解析器后的HttpServeltRequest
+
+DispatcherServlet -> HandlerMapping:url请求映射
+HandlerMapping --> DispatcherServlet:返回一个HandlerExecutionChain
+
+DispatcherServlet -> HandlerAdapter:确定当前请求的处理程序适配器
+HandlerAdapter --> DispatcherServlet:返回当前请求的处理程序适配器
+
+DispatcherServlet -> 拦截器前置方法:调用前置拦截器
+拦截器前置方法 --> DispatcherServlet
+
+DispatcherServlet -> Handle:controller处理器
+Handle --> DispatcherServlet:返回试图解析器
+DispatcherServlet -> ViewNameTranslator:视图名称翻译器
+
+DispatcherServlet -> 拦截器后置方法:调用前置拦截器
+拦截器后置方法 --> DispatcherServlet
+
+
+DispatcherServlet -> ViewResolvers视图解析:渲染页面
+
+DispatcherServlet -> 视图渲染后的拦截器方法
+
+DispatcherServlet --> 客户端
+
+
+
+
+
+@enduml
