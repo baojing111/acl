@@ -1,0 +1,12 @@
+@startuml
+
+state Mybatis {
+  [*] --> SqlSessionFactoryBuilder
+  SqlSessionFactoryBuilder --> SqlSessionFactory
+  SqlSessionFactory --> SqlSession
+  SqlSession --> Mapper
+  Mapper --> [*]
+}
+
+
+@enduml
